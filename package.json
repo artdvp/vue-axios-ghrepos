@@ -6,12 +6,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "parcel index.html --out-dir public",
-    "build": "parcel build index.html index.js index.css --out-dir  dist"
+    "build": "parcel build index.html index.js index.css --out-dir dist"
   },
   "author": "artdvp",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.0",
+    "moment": "^2.21.0",
     "node-sass": "^4.8.3",
     "vue": "^2.5.16",
     "vue-2-bulma-pagination": "0.0.8"

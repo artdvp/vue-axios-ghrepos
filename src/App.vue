@@ -1,12 +1,15 @@
 <template lang="html">
-    <div id="app" class="container">
+  <div id="app" class="container">
       <section class="hero has-text-centered">
         <div class="container">
           <h1 class="title">
-            Github Repos
+            Github Repos by @Artdvp
           </h1>
-          <h2>
-            Enter Github Username
+          <h2 v-if="repo_checked">
+            Github User : &gt;&gt; {{ us_search }} &lt;&lt;
+          </h2>
+          <h2 v-else>
+            Github User : ...
           </h2>
         </div>
       </section>
@@ -15,119 +18,126 @@
             <div class="box">
               <form class="field has-addons" @submit.prevent="">
                 <p class="control is-expanded">
-                  <input id="userNameBox" v-model="username" type="text" class="input" placeholder="username...">
+                  <input id="userNameBox" v-model="username" type="text" class="input" placeholder="Enter Github Username...">
                 </p>
                 <p class="control">
-                  <button type="submit" class="button" @click="getRepos(1)">
+                  <button type="submit" class="button" @click="submitRepos">
                     Search
                   </button>
                 </p>
               </form>
             </div>
 
-             <div class="card gitcard" v-for="repo in repos">
-              <div class="card-content">
-                <div class="media">
-                  <div class="media-center ">
-                      <img :src="repo.owner.avatar_url"  class="author-image" alt="Placeholder Image">
-                  </div>
-                  <div class="media-content hide-over has-text-centered">
-                    <p class="title is-4"><a :href="repo.html_url" target="_blank">{{ repo.name }}</a></p>
-                    <p class="subtitle is-6"> <a :href="repo.owner.html_url"  target="_blank">@{{ repo.owner.login }}</a></p>
-                  </div>
-                </div>
-                <div class="content has-text-centered">
-                  <b>Created</b> : {{ repo.created_at }} <b>Updated</b> : {{ repo.updated_at }}
-                </div>
-                <div class="subtitle has-text-centered">
-                  {{ repo.description }}
-                </div>
-              </div>
-            </div>
+            <Card class="card gitcard" 
+            v-for="repo in repos" :key="repo.id"
+            :avatar_url="repo.owner.avatar_url"
+            :repo_html_url="repo.html_url"
+            :repo_name="repo.name"
+            :user_html_url="repo.owner.html_url"
+            :user_login="repo.owner.login"
+            :created_at="datetoString(repo.created_at)"
+            :updated_at="datetoString(repo.updated_at)"
+            :description="repo.description" >   
+            </Card>
           </div>
       </div>
-
-    </div>
-
+       <pagination
+        :current="pagination.current"
+        :total="pagination.total"
+        :itemsPerPage="pagination.itemsPerPage"
+        :onChange="onChange">
+      </pagination>
+  </div>
 </template>
 
 <script>
 import axios from "axios";
+import Card from "./components/Card";
+import { datetoString } from "./utils/utils";
+import Pagination from "vue-2-bulma-pagination";
 
-// let pagination = {
-//   current: 1,
-//   total: 0,
-//   itemsPerPage: 5
-// };
+let pagination = {
+  current: 1,
+  total: 10,
+  itemsPerPage: 5
+};
 
 export default {
   name: "app",
   components: {
-
+    Card,
+    Pagination
   },
   data() {
     return {
       msg: "Welcome to Vue Parcel",
       username: "",
+      us_search: "",
       repos: null,
       countRepos: 0,
-      pagination: {
-        current: 1,
-        total: 0,
-        itemsPerPage: 5
-      }
+      pagination: pagination,
+      repo_checked: false
     };
   },
-  mounted(){
+  mounted() {
     this.pagination.total = 0;
   },
   methods: {
+    datetoString: datetoString,
+    submitRepos() {
+      this.us_search = this.username;
+      this.getRepos(1);
+    },
     onChange(page) {
-       this.getRepos(page);
+      this.getRepos(page);
     },
     getReposCount: function() {
-      return axios.get(`https://api.github.com/users/${this.username}`);
+      return this.us_search.trim() !== ""
+        ? axios.get(`https://api.github.com/users/${this.us_search}`)
+        : null;
     },
     getReposfromUser: function(page) {
-      return axios.get(
-        `https://api.github.com/users/${
-          this.username
-        }/repos?per_page=5&page=${page}`
-      );
+      return this.us_search.trim() !== ""
+        ? axios.get(
+            `https://api.github.com/users/${
+              this.us_search
+            }/repos?per_page=5&page=${page}`
+          )
+        : null;
     },
     getRepos: function(page) {
       return axios
         .all([this.getReposCount(), this.getReposfromUser(page)])
         .then(
           axios.spread((reposcount, reposuser) => {
-            // this.countRepos = reposcount
-            console.log(reposcount.data.public_repos);
-            if (reposcount.data.public_repos > 0) {
+            if (reposcount != null) {
               this.pagination.total = reposcount.data.public_repos;
+              this.repo_checked = true;
+            } else {
+              this.pagination.total = 0;
+              this.pagination.current = 1;
+              this.repo_checked = false;
             }
-            this.pagination.current = page;
-            this.repos = reposuser.data;
-            console.log(reposuser.data);
+            if (reposuser != null) {
+              this.repos = reposuser.data;
+              this.pagination.current = page;
+            } else {
+              this.repos = null;
+            }
           })
         )
         .catch(error => {
           console.log(error);
           this.repos = null;
           this.countRepos = 0;
+          this.repo_checked = false;
+           this.pagination.total = 0;
         });
-      // return axios.get(`https://api.github.com/users/${this.username}/repos?per_page=5`)
-      // .then((response) => {
-      //    this.repos = response.data;
-      //   console.log(response.data);
-      // }).catch((error) => {
-
-      //   console.log(error);
-      //   this.repos = null;
-      // });
     }
   }
 };
 </script>
 
 <style lang="css">
+
 </style>

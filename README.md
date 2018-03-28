@@ -1,7 +1,16 @@
-A Pen created at CodePen.io. You can find this one at https://codepen.io/artdvp/pen/oqzjVX.
+## Vue Github Repos
 
-- [ ] Component-vue Parcel
-- [ ] Pagination
+### Tech
+
+- vuejs
+- bulma
+- axios
+- vue-2-bulma-pagination
+- parcel-bundler
+- GithubAPI
+
+A Pen created at CodePen.io. 
+You can find this one at https://codepen.io/artdvp/pen/oqzjVX.
 
 Parcel Vue
 
@@ -50,6 +59,17 @@ Github API
     "forks": 0,
     "open_issues": 2,
   }
+```
+
+> Edit file node_modules/vue-2-bulma-pagination/src/Pagination.vue
+
+> Before run because error when run with parcel 
+
+```html
+<style lang="sass">
+@import  "../../bulma/sass/utilities/_all";
+@import "../../bulma/sass/components/pagination";
+</style>
 ```
 
 ### Idea

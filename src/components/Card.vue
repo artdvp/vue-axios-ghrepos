@@ -1,20 +1,20 @@
 <template lang="html">
-  <div class="card gitcard" v-for="repo in repos">
+  <div class="card gitcard">
    <div class="card-content">
      <div class="media">
        <div class="media-center ">
-           <img :src="repo.owner.avatar_url"  class="author-image" alt="Placeholder Image">
+           <img :src="avatar_url"  class="author-image" alt="Placeholder Image">
        </div>
        <div class="media-content hide-over has-text-centered">
-         <p class="title is-4"><a :href="repo.html_url" target="_blank">{{ repo.name }}</a></p>
-         <p class="subtitle is-6"> <a :href="repo.owner.html_url"  target="_blank">@{{ repo.owner.login }}</a></p>
+         <p class="title is-4"><a :href="repo_html_url" target="_blank">{{ repo_name }}</a></p>
+         <p class="subtitle is-6"> <a :href="user_html_url"  target="_blank">@{{ user_login }}</a></p>
        </div>
      </div>
      <div class="content has-text-centered">
-       <b>Created</b> : {{ repo.created_at }} <b>Updated</b> : {{ repo.updated_at }}
+       <b>Created</b> : {{ created_at }} <b>Updated</b> : {{ updated_at }}
      </div>
      <div class="subtitle has-text-centered">
-       {{ repo.description }}
+       {{ description }}
      </div>
    </div>
  </div>
@@ -22,25 +22,19 @@
 
 <script>
 export default {
-  props: ['repos'],
-  data: {
-    username: '',
-    repos: null
-  },
-  methods: {
-    getRepos: function() {
-      return axios.get(`https://api.github.com/users/${this.username}/repos`)
-      .then((response) => {
-         this.repos = response.data;
-        console.log(response.data);
-      }).catch((error) => {
-        console.log(error);
-        this.repos = null;
-      });
-    }
-  }
-}
+  props: [
+    "avatar_url",
+    "repo_html_url",
+    "repo_name",
+    "user_html_url",
+    "user_login",
+    "created_at",
+    "updated_at",
+    "description"
+  ]
+};
 </script>
 
 <style lang="css">
+
 </style>
