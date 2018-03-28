@@ -1,7 +1,7 @@
 A Pen created at CodePen.io. You can find this one at https://codepen.io/artdvp/pen/oqzjVX.
 
 - [ ] Component-vue Parcel
-- [ ] Pagination 
+- [ ] Pagination
 
 Parcel Vue
 
@@ -14,6 +14,12 @@ $ npm install vue --save
 $ npm install parcel-bundler --save
 
 $ npm install parcel-bundler parcel-plugin-vue babel-preset-env --save
+
+# install pagination >> https://github.com/rosendin/vue-bulma-pagination
+$ npm install vue-2-bulma-pagination --save
+
+# install sass complied
+$ npm install node-sass --save
 ```
 
 Github API
@@ -45,3 +51,9 @@ Github API
     "open_issues": 2,
   }
 ```
+
+### Idea
+
+- [bootstrap github repo](https://codepen.io/by-Meftunca/pen/RjMOWz)
+- [Angular demo - search repos on github](https://codepen.io/andreic/pen/oKghp?editors=1010)
+- [Rainbow.js demo](https://codepen.io/LukyVj/pen/GeFKD?depth=everything&order=popularity&page=2&q=github+repos&show_forks=false)

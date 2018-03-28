@@ -22,7 +22,23 @@
 
 <script>
 export default {
-  props: ['repos']
+  props: ['repos'],
+  data: {
+    username: '',
+    repos: null
+  },
+  methods: {
+    getRepos: function() {
+      return axios.get(`https://api.github.com/users/${this.username}/repos`)
+      .then((response) => {
+         this.repos = response.data;
+        console.log(response.data);
+      }).catch((error) => {
+        console.log(error);
+        this.repos = null;
+      });
+    }
+  }
 }
 </script>
 
