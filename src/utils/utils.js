@@ -6,3 +6,10 @@ export function datetoString(date) {
     }
     return ''
 }
+
+export function datetoStringLocal(date) {
+    if(date) {
+        return moment(date).format("MMMM Do YYYY")
+    }
+    return ''
+}

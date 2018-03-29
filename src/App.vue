@@ -37,7 +37,8 @@
             :user_login="repo.owner.login"
             :created_at="datetoString(repo.created_at)"
             :updated_at="datetoString(repo.updated_at)"
-            :description="repo.description" >   
+            :description="repo.description"
+            :lang_repos="repo.language" >   
             </Card>
           </div>
       </div>

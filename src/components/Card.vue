@@ -11,7 +11,8 @@
        </div>
      </div>
      <div class="content has-text-centered">
-       <b>Created</b> : {{ created_at }} <b>Updated</b> : {{ updated_at }}
+       <b>Created</b> : {{ created_at }} <b>Updated</b> : {{ updated_at }} <br>
+       <label v-if="lang_repos"><span class="repo-language-color ml-0" :style="{backgroundColor: getColorfromLang(lang_repos) }"></span><span class="">{{lang_repos}}</span></label>
      </div>
      <div class="subtitle has-text-centered">
        {{ description }}
@@ -21,6 +22,9 @@
 </template>
 
 <script>
+import jsonColors from "../json/colors.json";
+import _ from "lodash";
+
 export default {
   props: [
     "avatar_url",
@@ -30,11 +34,37 @@ export default {
     "user_login",
     "created_at",
     "updated_at",
-    "description"
-  ]
+    "description",
+    "lang_repos"
+  ],
+  data() {
+    return {
+      colors_language: jsonColors
+    };
+  },
+  methods: {
+    getColorfromLang(color_api) {
+      let color = "";
+      let data = this.colors_language;
+      Object.keys(data).map(function(key){
+         if(key === color_api){
+         color = data[key] 
+         }
+      }); 
+      return color;
+    }
+  }
 };
 </script>
 
 <style lang="css">
-
+.repo-language-color {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
 </style>
