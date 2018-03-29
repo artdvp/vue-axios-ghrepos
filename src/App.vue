@@ -60,7 +60,7 @@ import Pagination from "vue-2-bulma-pagination";
 let pagination = {
   current: 1,
   total: 10,
-  itemsPerPage: 5
+  itemsPerPage: 4
 };
 
 export default {
@@ -102,7 +102,7 @@ export default {
         ? axios.get(
             `https://api.github.com/users/${
               this.us_search
-            }/repos?per_page=5&page=${page}`
+            }/repos?per_page=4&page=${page}`
           )
         : null;
     },
