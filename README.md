@@ -77,3 +77,7 @@ Github API
 - [bootstrap github repo](https://codepen.io/by-Meftunca/pen/RjMOWz)
 - [Angular demo - search repos on github](https://codepen.io/andreic/pen/oKghp?editors=1010)
 - [Rainbow.js demo](https://codepen.io/LukyVj/pen/GeFKD?depth=everything&order=popularity&page=2&q=github+repos&show_forks=false)
+
+### Knowledge
+
+- [Getting JavaScript Properties for Object Maps by Index or Name](https://weblog.west-wind.com/posts/2017/Mar/04/Getting-JavaScript-Properties-for-Object-Maps-by-Index-or-Name)

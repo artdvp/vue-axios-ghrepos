@@ -3,20 +3,22 @@
    <div class="card-content">
      <div class="media">
        <div class="media-center ">
-           <img :src="avatar_url"  class="author-image" alt="Placeholder Image">
+           <a :href="user_html_url" target="_blank"><img :src="avatar_url"  class="author-image" alt="Placeholder Image" :title="user_login"></a>
        </div>
        <div class="media-content hide-over has-text-centered">
          <p class="title is-4"><a :href="repo_html_url" target="_blank">{{ repo_name }}</a></p>
-         <p class="subtitle is-6"> <a :href="user_html_url"  target="_blank">@{{ user_login }}</a></p>
+         <p class="subtitle is-6 up_side">
+              {{ description }}
+         </p>
        </div>
      </div>
+ <div class="down_side has-text-centered">
+     <label v-if="lang_repos" class=""><span class="repo-language-color ml-0" :style="{backgroundColor: getColorfromLang(lang_repos) }"></span><span class="">{{lang_repos}}</span></label>
+     </div>
      <div class="content has-text-centered">
-       <b>Created</b> : {{ created_at }} <b>Updated</b> : {{ updated_at }} <br>
-       <label v-if="lang_repos"><span class="repo-language-color ml-0" :style="{backgroundColor: getColorfromLang(lang_repos) }"></span><span class="">{{lang_repos}}</span></label>
+       <b>Created</b> : {{ created_at }}  <br> <b>Updated</b> : {{ updated_at }} <br>
      </div>
-     <div class="subtitle has-text-centered">
-       {{ description }}
-     </div>
+    
    </div>
  </div>
 </template>
@@ -66,5 +68,11 @@ export default {
   height: 12px;
   border-radius: 50%;
   margin-right: 10px;
+}
+.up_side {
+  padding-top: 12px;
+}
+.down_side {
+  padding-bottom: 5px;
 }
 </style>

@@ -6,7 +6,7 @@
             Github Repos by @Artdvp
           </h1>
           <h2 v-if="repo_checked">
-            Github User : &gt;&gt; {{ us_search }} &lt;&lt;
+            Github User : <b>&gt;&gt; {{ us_search }} &lt;&lt;</b>
           </h2>
           <h2 v-else>
             Github User : ...
